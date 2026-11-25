@@ -88,6 +88,7 @@ textarea{display:block;resize:vertical;field-sizing:content;min-height:40px}
 .coll{flex:none;display:flex;align-items:center;gap:8px;padding-left:14px;border-left:1px solid var(--line);font-size:13.5px;color:var(--muted);cursor:pointer}.coll input{width:20px;height:20px;margin:0;padding:0;accent-color:var(--ok)}.coll.on{color:var(--ok);font-weight:700}
 .tops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .top{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:16px 18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}
+.top b.cash{font-size:clamp(26px,4.6vw,40px);line-height:1.1}
 .top:hover{background:var(--hover)}
 .top b{display:block;font:800 44px/1 var(--display);font-variant-numeric:tabular-nums;color:var(--accent)}
 .top strong{display:block;margin-top:4px}.top span{color:var(--muted);font-size:13.5px}
@@ -164,7 +165,7 @@ textarea{display:block;resize:vertical;field-sizing:content;min-height:40px}
   .tops{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .top{padding:14px}
   .top:first-child{grid-column:1/-1}
-  .top b{font-size:36px}
+  .top b{font-size:36px}.top b.cash{font-size:28px;line-height:36px}
   .ov{grid-template-columns:minmax(0,1fr)}
   .chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:-18px;padding:2px 18px;scrollbar-width:none}
   .chip{flex:none}
@@ -420,7 +421,7 @@ function rOver(){
   const go=(t,l)=>`<button class="go" data-go="${t}">${l}</button>`,kv=(a,b,s)=>`<div class="kv${s?" sumrow":""}"><span>${a}</span><b>${b}</b></div>`,sec=(t,r,body,w)=>`<section class="group${w?" wide":""}"><h2>${t}<small>${r||""}</small></h2><div class="list">${body}</div></section>`;
   const mark=(ok,y,n)=>`<span class="yn ${ok?"y":"x"}">${ok?y:n}</span>`;
   const tl=t=>kv(`${esc(t.task)}<small>#${t.n} · ${esc(t.owner)}${t.due?" · "+esc(t.due):""}</small>`,isLate(t)&&!/risk|Decision/.test(t.status)?pill("bad","Overdue"):pill(TONE[t.status],t.status));
-  $("over").innerHTML=`<div class="tops"><button class="top" data-go="homes"><b>${ht+kids.length}</b><strong>children</strong><span>${ht} homes + ${kids.length} staff kids</span></button><button class="top" data-go="vol"><b>${ad.length}</b><strong>adult volunteers</strong><span>${cg?cg+" caregivers as well":"caregivers not given yet"}</span></button><button class="top" data-go="tasks"><b>${pct(done,tasks.length)}%</b><strong>tasks done</strong><span>${done} of ${tasks.length}</span></button></div>
+  $("over").innerHTML=`<div class="tops"><button class="top" data-go="homes"><b>${ht+kids.length}</b><strong>children</strong><span>${ht} homes + ${kids.length} staff kids</span></button><button class="top" data-go="vol"><b>${ad.length}</b><strong>adult volunteers</strong><span>${cg?cg+" caregivers as well":"caregivers not given yet"}</span></button><button class="top" data-go="depts"><b class="cash">${tt(raised)}</b><strong>sponsor contributions raised</strong><span>${pct(raised,target)}% of ${tt(target)} target</span></button></div>
   <div class="ov">
   ${sec("Needs attention",go("tasks","All tasks"),urgent.map(tl).join("")||'<div class="none">Nothing overdue, at risk or waiting on a decision.</div>',1)}
   ${sec("Children by home",go("homes","Homes"),homes.map(x=>kv(esc(x.name),tot(x)||"<em>No names yet</em>")).join("")+kv("Homes and NGOs",ht,1)+kv("Staff kids",kids.length,1)+kv("All children",ht+kids.length,1))}
